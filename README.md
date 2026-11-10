@@ -1,27 +1,46 @@
-# Podcast Reviews Dataset Analysis Notebook
+# Podcast Reviews Analysis
 
-This Jupyter notebook provides an analysis of a Podcast Reviews Dataset. The analysis is divided into several sections:
+An analysis of podcast reviews from a SQLite database (podcasts, categories and reviews) with SQL, pandas, sentiment
+analysis and hypothesis tests: which podcasts and categories get the most and the best reviews, and does review
+activity go together with more positive reviews?
 
-1. **Import Libraries**: Necessary libraries such as pandas, numpy, sqlite3, textblob,  matplotlib, , wordcloud, scipy, scikit-learn and statsmodels
+## Key findings
 
-2. **Explore the Database**: The SQLite database is explored to understand the schema of the tables. The database is then queried to join the podcasts, categories, and reviews tables into a single DataFrame.
+- Ratings are very positive overall: average ratings per category are mostly between 4.4 and 4.8 out of 5.
+- **Review frequency and sentiment:** the correlation between how often a podcast is reviewed and how positive its
+  reviews are is practically zero (r = −0.02). It is statistically significant only because the dataset is very
+  large.
+- **Newer podcasts:** there is no evidence that newer podcasts receive higher initial ratings (slope p = 0.47).
+- **Popular categories:** categories with more reviews have slightly *less* positive sentiment (r = −0.20,
+  p = 0.04), the opposite of the hypothesis.
 
-3. **Data Cleaning**: The ‘category’ column is cleaned by applying a mapping to consolidate similar categories. Rows with missing values and duplicates are dropped.
+## What the notebook covers
 
-4. **Exploratory Data Analysis (EDA)**: The cleaned data is analyzed. This includes checking for missing values and duplicates, visualizing the distribution of ratings, exploring the number of podcasts per category, analyzing the average rating by category, creating a word cloud for common words used in reviews, and performing sentiment analysis on the review content.
+1. Exploring the database schema and joining the tables with SQL (including a CTE that aggregates categories)
+2. Cleaning: consolidating similar categories, missing values and duplicates
+3. EDA: rating distribution, reviews over time, top podcasts and categories by review count and average rating
+4. Sentiment of review texts with TextBlob, and word clouds
+5. Three hypothesis tests (Pearson correlation and linear regression)
 
-5. **Statistical Inference**: Three hypotheses tests are performed. The first test suggests that podcasts that receive reviews more frequently might be more popular or engaging, leading to a more positive sentiment in the reviews. The second test proposes that newer podcasts might receive a ‘honeymoon’ effect where initial listeners are more enthusiastic and likely to give higher ratings, which could change as the audience grows. The third test assumes that the popularity of a category, as measured by the number of reviews, is positively correlated with the sentiment of the reviews, indicating overall satisfaction within popular categories.
+## Repository
 
-## About the dataset
+| File | Content |
+|---|---|
+| [`podcast_reviews_analysis.ipynb`](podcast_reviews_analysis.ipynb) | The full analysis |
+| `Podcasts_Reviews_Analysis.pdf` | A short summary with the main charts |
 
-The data is from [Podcast Reviews Dataset](https://www.kaggle.com/datasets/thoughtvector/podcastreviews/versions/28).
+## Data
 
-Dataset built with PointScrape.
+[Podcast Reviews](https://www.kaggle.com/datasets/thoughtvector/podcastreviews) by Thoughtvector on Kaggle (SQLite
+database, not included; licence CC BY-NC-SA 4.0). Download `database.sqlite` and put it next to the notebook.
 
-Photo credit: Kati at xilophotography.com; Instagram @xilophotography. The creator featured can be found on Twitter @csallen. Full story: convertkit.com/courtland
+## Run it
 
-Licensing
-For commercial applications and use of full dataset, please contact stuart@thoughtvector.io.
+```bash
+pip install -r requirements.txt
+jupyter notebook podcast_reviews_analysis.ipynb
+```
 
-License
-CC BY-NC-SA 4.0
+## License
+
+MIT (code). The data has its own licence, see above.
